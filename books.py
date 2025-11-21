@@ -70,3 +70,11 @@ def read_author_category_by_query(book_author: str, category: str):
 def create_book(new_book: dict = Body()):
     BOOKS.append(new_book)
     return new_book
+
+@app.put("/books/{book_id}")
+def update_book(book_id: int, updated_book: dict = Body()):
+    for i in range(len(BOOKS)):
+        if BOOKS[i].get("id") == book_id:
+            BOOKS[i] = updated_book
+            return BOOKS[i]
+    return {"message": "Book not found"}
