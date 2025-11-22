@@ -47,7 +47,7 @@ BOOKS = [
         "The Great Gatsby",
         "F. Scott Fitzgerald",
         "A classic novel about the American Dream",
-        4.5,
+        4.0,
     ),
     Book(
         2,
@@ -61,7 +61,7 @@ BOOKS = [
         "Don't Look Up",
         "Adam McKay",
         "A science fiction novel about a comet that is heading towards Earth",
-        3.5,
+        3.0,
     ),
     Book(
         4,
@@ -83,6 +83,23 @@ BOOKS = [
 @app.get("/books")
 def read_all_books():
     return BOOKS
+
+
+@app.get("/books/{book_id}")
+def read_book(book_id: int):
+    for book in BOOKS:
+        if book.id == book_id:
+            return book
+    return {"message": "Book not found"}
+
+
+@app.get("/books/")
+def read_book_by_rating(rating: int):
+    books_to_return = []
+    for book in BOOKS:
+        if book.rating == rating:
+            books_to_return.append(book)
+    return books_to_return
 
 
 @app.post("/books")
