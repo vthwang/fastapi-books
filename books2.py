@@ -124,3 +124,11 @@ def update_book(book_id: int, book_request: BookRequest):
             book.rating = book_request.rating
             return book
     return {"message": "Book not found"}
+
+@app.delete("/books/{book_id}")
+def delete_book(book_id: int):
+    for i in range(len(BOOKS)):
+        if BOOKS[i].id == book_id:
+            BOOKS.pop(i)
+            return {"message": "Book deleted successfully"}
+    return {"message": "Book not found"}
