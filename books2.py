@@ -112,3 +112,15 @@ def create_book(book_request: BookRequest):
 def find_book_id(book: Book):
     book.id = 1 if len(BOOKS) == 0 else BOOKS[-1].id + 1
     return book
+
+
+@app.put("/books/{book_id}")
+def update_book(book_id: int, book_request: BookRequest):
+    for book in BOOKS:
+        if book.id == book_id:
+            book.title = book_request.title
+            book.author = book_request.author
+            book.description = book_request.description
+            book.rating = book_request.rating
+            return book
+    return {"message": "Book not found"}
